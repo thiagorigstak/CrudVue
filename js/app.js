@@ -33,7 +33,7 @@ var application = new Vue({
                         email: application.email,
                         telefone: application.telefone,
                     }).then(function (response) {
-                        application.myModel = false;
+                        application.myModal = false;
                         application.fetchUsers();
                         application.user = '';
                         application.email = '';
@@ -43,10 +43,52 @@ var application = new Vue({
                 }
                 if (application.actionButton == 'Update') {
                     axios.post('actions.php', {
-
-                    })
+                        action: 'update',
+                        user: application.user,
+                        email: application.email,
+                        telefone: application.email,
+                        hiddenId: application.hiddenId
+                    }).then(function (response){
+                        application.myModal = false;
+                        application.fetchUsers();
+                        application.user = '';
+                        application.email='';
+                        application.telefone='';
+                        application.hiddenId='';
+                        alert(response.data.message);
+                    });
                 }
+            } else {
+                alert("fill all fields");
             }
         },
+        fetchUser:function(id){
+            axios.post('action.php', {
+                action: 'fetchSingle',
+                id: id
+            }).then(function(response){
+                application.user = response.data.user;
+                application.email = response.data.email;
+                application.telefone = response.data.telefone;
+                application.hiddenId = response.data.id;
+                application.myModal = false;
+                application.actionButton = 'Update';
+                application.DynamicTitle = 'Editar Usuario';                
+            });
+        },
+        deleteUser:function(id){
+            if(confirm("Você realmente deseja excluir este usuario?")){
+                axios.post('action.php', {
+                    action: 'delete',
+                    id: id
+                }).then(function(response){
+                    application.fetchUsers();
+                    alert(response.data.message);
+                });
+            }
+        }
     },
+    created: function(){
+        this.fetchUsers();
+    }
 })
