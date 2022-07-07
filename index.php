@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
@@ -47,11 +47,11 @@
                     <tbody class="tbody-custom">
                         <tr v-for="user in users">
                             <td>{{user.id}}</td>
-                            <td>{{user.user}}</td>
+                            <td>{{user.nome}}</td>
                             <td>{{user.email}}</td>
                             <td>{{user.telefone}}</td>
-                            <td><button type="button" name="edit" class="btn btn-primary btn-xs edit" @click="fetchUser(row.id)">Edit</button></td>
-                            <td><button type="button" name="delete" class="btn btn-danger btn-xs delete" @click="deleteUser(row.id)">Delete</button></td>
+                            <td><button type="button" name="edit" class="btn btn-primary btn-xs edit" @click="fetchUser(user.id)">Edit</button></td>
+                            <td><button type="button" name="delete" class="btn btn-danger btn-xs delete" @click="deleteUser(user.id)">Delete</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -79,7 +79,7 @@
                                 <input type="text" class="form-control" v-model="telefone" />
                             </div>
                             <div align="center">
-                                <input type="hidden" v-model="hiddenId" />
+                                <input type="hidden" class="form-control" v-model="id" />
 
                             </div>
                         </div>

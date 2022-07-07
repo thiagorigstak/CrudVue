@@ -20,6 +20,7 @@ var application = new Vue({
             application.user = '';
             application.email = '';
             application.telefone = '';
+            application.id = '';
             application.actionButton = 'Adicionar';
             application.DynamicTitle = 'Adicionar Usuario';
             application.myModal = true;
@@ -46,49 +47,53 @@ var application = new Vue({
                         action: 'update',
                         user: application.user,
                         email: application.email,
-                        telefone: application.email,
-                        hiddenId: application.hiddenId
-                    }).then(function (response){
+                        telefone: application.telefone,
+                        id: application.id
+                    }).then(function (response) {
+                        //alert(response.data);
                         application.myModal = false;
                         application.fetchUsers();
                         application.user = '';
-                        application.email='';
-                        application.telefone='';
-                        application.hiddenId='';
-                        alert(response.data.message);
+                        application.email = '';
+                        application.telefone = '';
+                        application.id = '';
+                        alert("UPDATE " + response.data.message);
                     });
                 }
             } else {
                 alert("fill all fields");
             }
         },
-        fetchUser:function(id){
-            axios.post('action.php', {
+        fetchUser: function (id) {
+            alert("Id passado para fetchUser " + id);
+            axios.post('actions.php', {
                 action: 'fetchSingle',
                 id: id
-            }).then(function(response){
+            }).then(function (response) {
+                alert("id resposta de FetchUser " + response.data.id);
                 application.user = response.data.user;
                 application.email = response.data.email;
                 application.telefone = response.data.telefone;
-                application.hiddenId = response.data.id;
-                application.myModal = false;
+                application.id = response.data.id;
+                application.myModal = true;
                 application.actionButton = 'Update';
-                application.DynamicTitle = 'Editar Usuario';                
+                application.DynamicTitle = 'Editar Usuario #' + application.id;
+                //alert(response.data.id);
             });
         },
-        deleteUser:function(id){
-            if(confirm("Você realmente deseja excluir este usuario?")){
-                axios.post('action.php', {
+        deleteUser: function (id) {
+            if (confirm("Você realmente deseja excluir este usuario?")) {
+                axios.post('actions.php', {
                     action: 'delete',
                     id: id
-                }).then(function(response){
+                }).then(function (response) {
                     application.fetchUsers();
                     alert(response.data.message);
                 });
             }
         }
     },
-    created: function(){
+    created: function () {
         this.fetchUsers();
     }
 })
