@@ -47,18 +47,18 @@ if ($received_data->action == 'fetchSingle') {
         $statement = $connect->prepare($query);
         $statement->execute();
     } catch (PDOException $e) {
+        echo json_encode("ERRO:" . $e->getMessage() . "<br/>" . $query);
         echo "ERRO:" . $e->getMessage() . "<br/>" . $query;
     }
 
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
     foreach ($result as $row) {
-        $data['user'] = $row['user'];
+        $data['nome'] = $row['nome'];
         $data['email'] = $row['email'];
         $data['telefone'] = $row['telefone'];
         $data['id'] = $row['id'];
     }
-
     echo json_encode($data);
 }
 if ($received_data->action == 'update') {
@@ -69,13 +69,7 @@ if ($received_data->action == 'update') {
         ':id'   => $received_data->id
     );
 
-    $query = "
- UPDATE users 
- SET nome = :nome, 
- email = :email,
- telefone = :telefone, 
- WHERE id = :id
- ";
+    $query = "UPDATE users SET nome = :nome, email = :email,telefone = :telefone WHERE id = :id";
     try {
         $statement = $connect->prepare($query);
 

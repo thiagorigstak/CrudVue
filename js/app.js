@@ -50,7 +50,7 @@ var application = new Vue({
                         telefone: application.telefone,
                         id: application.id
                     }).then(function (response) {
-                        //alert(response.data);
+                        console.log(response);
                         application.myModal = false;
                         application.fetchUsers();
                         application.user = '';
@@ -61,17 +61,16 @@ var application = new Vue({
                     });
                 }
             } else {
-                alert("fill all fields");
+                alert("Preencha todos os campos");
             }
         },
         fetchUser: function (id) {
-            alert("Id passado para fetchUser " + id);
             axios.post('actions.php', {
                 action: 'fetchSingle',
                 id: id
             }).then(function (response) {
-                alert("id resposta de FetchUser " + response.data.id);
-                application.user = response.data.user;
+                //console.log(response);
+                application.user = response.data.nome;
                 application.email = response.data.email;
                 application.telefone = response.data.telefone;
                 application.id = response.data.id;

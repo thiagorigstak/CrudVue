@@ -68,15 +68,15 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>Insira Usuario</label>
-                                <input type="text" class="form-control" v-model="user" />
+                                <input type="text" class="form-control" maxlength="50" v-model="user" />
                             </div>
                             <div class="form-group">
                                 <label>Insira Email</label>
-                                <input type="email" class="form-control" v-model="email" />
+                                <input type="email" class="form-control" maxlength="20" v-model="email" />
                             </div>
                             <div class="form-group">
                                 <label>Insira Telefone</label>
-                                <input type="text" class="form-control" v-model="telefone" />
+                                <input type="text" class="form-control" maxlength="12" minlength="9" v-model="telefone" />
                             </div>
                             <div align="center">
                                 <input type="hidden" class="form-control" v-model="id" />
